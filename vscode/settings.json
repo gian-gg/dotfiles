@@ -1,0 +1,74 @@
+{
+  "editor.accessibilitySupport": "off",
+  "workbench.colorTheme": "Best Themes - Slime Extra Dark Italic",
+  "workbench.activityBar.location": "hidden",
+  "workbench.statusBar.visible": false,
+  // "workbench.editor.showTabs": "single",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "workbench.list.smoothScrolling": true,
+  "editor.smoothScrolling": true,
+  "workbench.startupEditor": "none",
+  "breadcrumbs.enabled": false,
+  "workbench.sideBar.location": "right",
+  "workbench.iconTheme": "symbols",
+  "symbols.hidesExplorerArrows": true,
+  "workbench.tree.enableStickyScroll": false,
+  "workbench.tree.indent": 8,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "editor.fontFamily": "Dank Mono",
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorStyle": "block",
+  "editor.minimap.enabled": false,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "window.customTitleBarVisibility": "never",
+  "window.titleBarStyle": "native",
+  "custom-ui-style.electron": {
+    "titleBarStyle": "hiddenInset",
+    "trafficLightPosition": {
+      "x": 20,
+      "y": 16
+    }
+  },
+  "custom-ui-style.stylesheet": {
+    ".monaco-workbench .part.editor .editor-group-container .tabs-container": "margin-left: 60px"
+  },
+  "editor.formatOnSave": true,
+  "notebook.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "window.newWindowProfile": "Default",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.gpuAcceleration": "auto",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.donotShowInfoMsg": true,
+  "workbench.editor.empty.hint": "hidden",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "github.copilot.nextEditSuggestions.enabled": true
+  // "importSorter.generalConfiguration.sortOnBeforeSave": true
+}
