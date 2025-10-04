@@ -1,0 +1,96 @@
+# ======================
+# Aerospace Configuration
+# ======================
+
+after-startup-command = []
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = false
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 20
+inner.vertical = 20
+outer.left = 20
+outer.right = 20
+outer.top = 20
+outer.bottom = 20
+
+# ======================
+# MAIN MODE KEYBINDINGS
+# ======================
+[mode.main.binding]
+
+# --- Focus navigation ---
+alt-cmd-comma = 'focus left'
+alt-cmd-period = 'focus right'
+
+# Switch focus between monitors
+alt-cmd-tab = 'focus-monitor next'
+
+# --- Resize (manual smart grow/shrink) ---
+alt-cmd-minus = 'resize smart -50'
+alt-cmd-equal = 'resize smart +50'
+
+# --- Quick tiling/snap ---
+alt-cmd-left  = 'move left'
+alt-cmd-right = 'move right'
+alt-cmd-f     = 'layout floating tiling'  # toggle floating (maximize-like)
+
+# --- Workspaces ---
+alt-cmd-i = 'workspace 1'
+alt-cmd-o = 'workspace 2'
+alt-cmd-p = 'workspace 3'
+alt-cmd-j = 'workspace 4'
+alt-cmd-k = 'workspace 5'
+alt-cmd-l = 'workspace 6'
+
+# Move window to workspace
+alt-cmd-shift-i = 'move-node-to-workspace 1'
+alt-cmd-shift-o = 'move-node-to-workspace 2'
+alt-cmd-shift-p = 'move-node-to-workspace 3'
+alt-cmd-shift-j = 'move-node-to-workspace 4'
+alt-cmd-shift-k = 'move-node-to-workspace 5'
+alt-cmd-shift-l = 'move-node-to-workspace 6'
+
+# --- Layout toggle (only tiles) ---
+alt-cmd-slash = 'layout tiles horizontal vertical'
+
+[workspace-to-monitor-force-assignment]
+"1" = "main"   # workspace 1 always on main monitor
+"2" = "main"
+"3" = "main"
+
+"4" = "secondary" # workspace 4–6 always on second monitor
+"5" = "secondary"
+"6" = "secondary"
+
+
+# ======================
+# SERVICE MODE
+# ======================
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+
+[[on-window-detected]]
+if.app-id = "com.apple.finder"
+run = ["layout floating"]
+
+[[on-window-detected]]
+if.app-id = "com.apple.systempreferences"
+run = ["layout floating"]
+
+[[on-window-detected]]
+if.app-id = "com.netacad.PacketTracer8.2.2"
+run = ["layout floating"]
