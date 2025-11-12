@@ -1,0 +1,249 @@
+# Material UI Islands - SketchyBar Config
+# Floating islands with rounded corners and transparent background
+# Version 2.0 | November 2025
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+##### Material Design Color Palette #####
+# Clean, modern colors for island aesthetic
+
+# Primary - Pastel Purple (oklch(0.78 0.14 285))
+PRIMARY=0xffc4b5fd
+PRIMARY_FG=0xff1f1f1f
+
+# Accent - Pink Purple (oklch(0.73 0.12 310))
+ACCENT=0xffd8b4fe
+
+# Background Layers - Island Surfaces
+BG_BASE=0x00FFFFFF      # Transparent - No bar background
+BG_CARD=0xff303030      # Dark islands - Elevated containers
+BG_POPOVER=0xff333333   # Floating elements
+
+# Foreground Colors
+FG_PRIMARY=0xfffaf9fb   # oklch(0.98 0.01 270) - High contrast text
+FG_MUTED=0xffb8b5ba     # oklch(0.72 0.01 270) - Secondary text
+
+# Semantic Colors
+SUCCESS=0xffa7e3c3      # oklch(0.68 0.14 160) - Green for success states
+WARNING=0xfff3e3b8      # oklch(0.75 0.16 80) - Orange for warnings
+DESTRUCTIVE=0xffea7d7d  # oklch(0.62 0.22 27) - Red for errors
+
+##### Bar Appearance - Material UI Islands #####
+# Transparent background with floating rounded island components
+
+sketchybar --bar \
+  position=bottom \
+  height=42 \
+  margin=0 \
+  y_offset=4 \
+  corner_radius=0 \
+  border_width=0 \
+  blur_radius=0 \
+  padding_left=24 \
+  padding_right=24 \
+  color=0x00000000 \
+  shadow=off \
+  sticky=on \
+  topmost=false \
+  notch_width=200
+
+##### Changing Defaults - Material UI Islands #####
+# JetBrains Mono typography with clean spacing
+# Rounded corners for all island elements
+# Rounded corners for elevated surfaces
+
+default=(
+  padding_left=8
+  padding_right=8
+  icon.font="JetBrains Mono:Bold:14.0"
+  label.font="JetBrains Mono:Medium:12.0"
+  icon.color=$FG_PRIMARY
+  label.color=$FG_PRIMARY
+  icon.padding_left=8
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=8
+  background.height=32
+  background.corner_radius=10
+  background.border_width=0
+  background.padding_left=0
+  background.padding_right=0
+  background.color=$BG_CARD
+  background.shadow.drawing=off
+  updates=on
+)
+
+sketchybar --default "${default[@]}"
+
+# ============================================================
+# Left
+
+# Apple Logo
+sketchybar --add item apple.logo left \
+  --set apple.logo \
+  icon=􀣺 \
+  icon.color=$PRIMARY \
+  icon.font="SF Pro:Bold:16.0" \
+  icon.padding_left=12 \
+  icon.padding_right=12 \
+  label.drawing=off \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=8 \
+  click_script="open -a 'System Settings'"
+
+##### Aerospace Workspace Islands #####
+# Workspace indicators with dynamic highlighting
+# Add the aerospace events we specified in aerospace.toml
+sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_monitor_change
+
+for sid in $(aerospace list-workspaces --all); do
+  sketchybar --add item space.$sid left \
+    --subscribe space.$sid aerospace_workspace_change \
+    --set space.$sid \
+    display="$(
+      v=$(aerospace list-windows --workspace "$sid" --format "%{monitor-appkit-nsscreen-screens-id}" | cut -c1)
+      echo "${v:-1}"
+    )" \
+    drawing=off \
+    background.color=$BG_CARD \
+    background.corner_radius=10 \
+    background.drawing=on \
+    background.border_color=$PRIMARY \
+    background.border_width=0 \
+    background.height=32 \
+    icon="$sid" \
+    icon.color=$PRIMARY \
+    icon.font="JetBrains Mono:Bold:13.0" \
+    icon.padding_left=12 \
+    icon.padding_right=12 \
+    label.drawing=off \
+    background.padding_left=4 \
+    background.padding_right=4 \
+    click_script="aerospace workspace $sid" \
+    script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+done
+
+# Load Icons on startup
+for mid in $(aerospace list-monitors | cut -c1); do
+  for sid in $(aerospace list-workspaces --monitor $mid --empty no); do
+    sketchybar --set space.$sid drawing=on
+  done
+done
+
+# Space Sperator "/"
+sketchybar --add item space_separator left \
+  --set space_separator \
+  icon="/" \
+  icon.color=$FG_MUTED \
+  icon.font="JetBrains Mono:Regular:12.0" \
+  icon.padding_left=1 \
+  icon.padding_right=1 \
+  label.drawing=off \
+  background.drawing=off \
+  background.padding_left=4 \
+  background.padding_right=4 \
+
+# Front app
+sketchybar --add item front_app left \
+  --set front_app \
+  icon.drawing=off \
+  label.drawing=on \
+  label.font="JetBrains Mono:Bold:13.0" \
+  label.color=$PRIMARY \
+  label.padding_left=8 \
+  label.padding_right=12 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/front_app.sh" \
+  --subscribe front_app front_app_switched
+
+
+# ============================================================
+# Right
+
+# Date & Time
+sketchybar --add item clock right \
+  --set clock \
+  update_freq=1 \
+  icon= \
+  icon.color=$ACCENT \
+  icon.font="Hack Nerd Font:Bold:14.0" \
+  label.color=$FG_PRIMARY \
+  label.font="JetBrains Mono:Medium:12.0" \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/clock.sh"
+
+# Volume
+sketchybar --add item volume right \
+  --set volume \
+  icon.color=$PRIMARY \
+  label.color=$FG_PRIMARY \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change
+
+# Battery
+sketchybar --add item battery right \
+  --set battery \
+  update_freq=120 \
+  icon.font="Hack Nerd Font:Bold:14.0" \
+  icon.color=$SUCCESS \
+  label.color=$FG_PRIMARY \
+  label.font="JetBrains Mono:Medium:11.0" \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change
+
+# Wifi
+sketchybar --add item wifi right \
+  --set wifi \
+  update_freq=10 \
+  icon=󰖩 \
+  icon.font="Hack Nerd Font:Bold:14.0" \
+  icon.color=$PRIMARY \
+  label.color=$FG_PRIMARY \
+  label.font="JetBrains Mono:Medium:11.0" \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/wifi.sh" \
+  --subscribe wifi wifi_change
+
+# Media
+sketchybar --add item media right \
+  --set media \
+  update_freq=2 \
+  icon= \
+  icon.font="Hack Nerd Font:Bold:14.0" \
+  icon.color=$ACCENT \
+  label.color=$FG_PRIMARY \
+  label.font="JetBrains Mono:Medium:11.0" \
+  label.max_chars=35 \
+  background.color=$BG_CARD \
+  background.corner_radius=10 \
+  background.height=32 \
+  background.padding_left=4 \
+  background.padding_right=4 \
+  script="$PLUGIN_DIR/media.sh" \
+  --subscribe media media_change
+
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update
