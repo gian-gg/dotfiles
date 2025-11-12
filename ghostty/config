@@ -1,11 +1,16 @@
 term = xterm-256color
 
 macos-icon = xray
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
+
+macos-icon-frame=plastic
+macos-icon-ghost-color=#6E6C6C
+macos-icon-screen-color=#0F0F0F
 
 font-family = "Dank Mono"
 font-thicken = true
 font-size = 16
+font-feature = -calt, -liga, -dlig
 
 mouse-hide-while-typing = true
 
@@ -27,12 +32,21 @@ keybind = super+ctrl+j=resize_split:down,10
 keybind = super+ctrl+k=resize_split:up,10
 keybind = super+ctrl+l=resize_split:right,10
 
-# Background & transparency (matte dark, frosted look)
-background = 101010
-background-opacity = 0.4
-background-blur-radius = 80
+# Background & transparency (deeper matte black with frosted look)
+# background = #000
+# background-opacity = 0.90
+# background-blur-radius = 30
 
-# Foreground (text color)
-foreground = #c0caf5
-cursor-color = #c0caf5
-selection-background = #33467c
+background = #131313
+background-opacity = 0.8
+background-blur-radius = 10
+
+
+# Foreground (text color, slightly softer than pure white)
+foreground = #bfc9ff
+cursor-color = #bfc9ff
+selection-background = #2a2e47
+
+
+window-padding-x = 20
+window-padding-y = 20
