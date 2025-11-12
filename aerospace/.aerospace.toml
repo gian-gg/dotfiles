@@ -15,6 +15,10 @@ default-root-container-orientation = 'auto'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 automatically-unhide-macos-hidden-apps = false
 
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
+]
+
 [key-mapping]
 preset = 'qwerty'
 
@@ -24,7 +28,7 @@ inner.vertical = 20
 outer.left = 20
 outer.right = 20
 outer.top = 20
-outer.bottom = 20
+outer.bottom = 65
 
 # ======================
 # MAIN MODE KEYBINDINGS
