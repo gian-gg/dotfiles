@@ -1,12 +1,17 @@
 term = xterm-256color
 
-macos-icon = xray
+# macOS window vibe (clean, minimal, “poster frame”)
 macos-titlebar-style = hidden
+window-decoration = true
+window-save-state = always
 
-macos-icon-frame=plastic
-macos-icon-ghost-color=#6E6C6C
-macos-icon-screen-color=#0F0F0F
+# icon styling (hex WITHOUT '#')
+macos-icon = xray
+macos-icon-frame = plastic
+macos-icon-ghost-color = 7B7A78
+macos-icon-screen-color = 0E0F11
 
+# Font
 font-family = "Dank Mono"
 font-thicken = true
 font-size = 16
@@ -14,10 +19,22 @@ font-feature = -calt, -liga, -dlig
 
 mouse-hide-while-typing = true
 
-window-decoration = true
-window-save-state = always
+# --- Colors: foggy slate + paper highlights (hex WITHOUT '#') ---
+background = 0F1114
+background-opacity = 0.72
+background-blur-radius = 22
 
-# keybinds
+foreground = D2D0CC
+cursor-color = D2D0CC
+
+selection-background = 2B3036
+selection-foreground = E6E3DE
+
+# Padding
+window-padding-x = 22
+window-padding-y = 22
+
+# --- Keybinds ---
 keybind = global:cmd+f20=toggle_quick_terminal
 keybind = ctrl+h=goto_split:left
 keybind = ctrl+j=goto_split:bottom
@@ -31,22 +48,3 @@ keybind = super+ctrl+h=resize_split:left,10
 keybind = super+ctrl+j=resize_split:down,10
 keybind = super+ctrl+k=resize_split:up,10
 keybind = super+ctrl+l=resize_split:right,10
-
-# Background & transparency (deeper matte black with frosted look)
-# background = #000
-# background-opacity = 0.90
-# background-blur-radius = 30
-
-background = #131313
-background-opacity = 0.8
-background-blur-radius = 10
-
-
-# Foreground (text color, slightly softer than pure white)
-foreground = #bfc9ff
-cursor-color = #bfc9ff
-selection-background = #2a2e47
-
-
-window-padding-x = 20
-window-padding-y = 20
