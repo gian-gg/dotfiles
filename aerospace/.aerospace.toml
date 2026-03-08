@@ -27,8 +27,8 @@ inner.horizontal = 20
 inner.vertical = 20
 outer.left = 20
 outer.right = 20
-outer.top = 20
-outer.bottom = 65
+outer.top = 55
+outer.bottom = 20
 
 # ======================
 # MAIN MODE KEYBINDINGS
@@ -49,7 +49,8 @@ alt-cmd-equal = 'resize smart +50'
 # --- Quick tiling/snap ---
 alt-cmd-left  = 'move left'
 alt-cmd-right = 'move right'
-alt-cmd-f     = 'layout floating tiling'  # toggle floating (maximize-like)
+alt-cmd-d     = 'layout floating tiling'  # toggle floating (maximize-like)
+alt-cmd-f = "fullscreen"
 
 # --- Workspaces ---
 alt-cmd-i = 'workspace 1'
