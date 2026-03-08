@@ -5,8 +5,29 @@ TITLE=""
 ARTIST=""
 STATE=""
 
+NOWPLAYING_BIN="$(command -v nowplaying-cli 2>/dev/null)"
+if [ -n "$NOWPLAYING_BIN" ]; then
+    NOWPLAYING_OUTPUT="$("$NOWPLAYING_BIN" get title artist playbackRate 2>/dev/null || true)"
+    TITLE="$(printf "%s\n" "$NOWPLAYING_OUTPUT" | sed -n '1p')"
+    ARTIST="$(printf "%s\n" "$NOWPLAYING_OUTPUT" | sed -n '2p')"
+    PLAYBACK_RATE="$(printf "%s\n" "$NOWPLAYING_OUTPUT" | sed -n '3p')"
+
+    if [ "$TITLE" = "null" ]; then
+        TITLE=""
+    fi
+    if [ "$ARTIST" = "null" ]; then
+        ARTIST=""
+    fi
+
+    if [ "$PLAYBACK_RATE" = "0" ]; then
+        STATE="paused"
+    elif [ "$PLAYBACK_RATE" = "1" ]; then
+        STATE="playing"
+    fi
+fi
+
 # Check Spotify first if running
-if pgrep -x "Spotify" > /dev/null 2>&1; then
+if [ -z "$TITLE" ] && pgrep -x "Spotify" > /dev/null 2>&1; then
     STATE=$(osascript -e 'tell application "Spotify" to get player state as string' 2>/dev/null)
     if [ "$STATE" = "playing" ] || [ "$STATE" = "paused" ]; then
         TITLE=$(osascript -e 'tell application "Spotify" to get name of current track' 2>/dev/null)
@@ -25,33 +46,26 @@ fi
 
 # If we have a title, display it
 if [ -n "$TITLE" ]; then
-    # Format: Artist – Title
+    # Format: Artist - Title
     if [ -n "$ARTIST" ]; then
-        DISPLAY_TEXT="$ARTIST – $TITLE"
+        DISPLAY_TEXT="$ARTIST - $TITLE"
     else
         DISPLAY_TEXT="$TITLE"
     fi
     
-    # Truncate if too long
-    MAX_LENGTH=35
-    if [ ${#DISPLAY_TEXT} -gt $MAX_LENGTH ]; then
-        DISPLAY_TEXT="${DISPLAY_TEXT:0:$MAX_LENGTH}..."
-    fi
-    
-    # Set icon and color based on state
+    # Set icon based on state
     if [ "$STATE" = "playing" ]; then
         ICON="󰐊"
-        COLOR="0xff66bb6a"
+        COLOR="0xffffffff"
     else
         ICON="󰏤"
-        COLOR="0xffffb74d"
+        COLOR="0xffded8cf"
     fi
-    
+
     sketchybar --set "$NAME" \
-        icon="$ICON" \
-        label="$DISPLAY_TEXT" \
-        icon.color="$COLOR" \
+        label="[ ${ICON} ${DISPLAY_TEXT} ]" \
         label.drawing=on \
+        label.color="$COLOR" \
         drawing=on
 else
     # Nothing playing - hide the item

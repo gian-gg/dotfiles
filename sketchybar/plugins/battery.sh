@@ -21,8 +21,13 @@ esac
 
 if [[ "$CHARGING" != "" ]]; then
   ICON=""
+  COLOR="0xffffffff"
+else
+  COLOR="0xffded8cf"
 fi
 
-# The item invoking this script (name $NAME) will get its icon and label
+LABEL="[ ${ICON} ${PERCENTAGE}% ]"
+
+# The item invoking this script (name $NAME) will get its label
 # updated with the current battery status
-sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%"
+sketchybar --set "$NAME" icon="$ICON" label="$LABEL" label.color="$COLOR"

@@ -1,44 +1,30 @@
 #!/bin/bash
 
-# Check wifi status across multiple interfaces
-WIFI_DEVICE=""
-WIFI_SSID=""
+# TUI palette (keep in sync with sketchybarrc)
+PRIMARY_COLOR="0xffffffff"
+MUTED_COLOR="0xffded8cf"
 
-# Try common wifi interfaces
-for interface in en0 en1 en2; do
-    # Check if interface has an IP address (connected to network)
-    if ifconfig "$interface" 2>/dev/null | grep -q "inet "; then
-        # Try to get SSID
-        SSID=$(networksetup -getairportnetwork "$interface" 2>/dev/null | sed 's/Current Wi-Fi Network: //')
-        
-        if [ "$SSID" != "You are not associated with an AirPort network." ] && [ -n "$SSID" ]; then
-            WIFI_DEVICE="$interface"
-            WIFI_SSID="$SSID"
-            break
-        fi
+# Prefer the default route interface
+WIFI_DEVICE="$(route -n get default 2>/dev/null | awk '/interface:/{print $2; exit}')"
+
+# Fallback: probe common interfaces
+if [ -z "$WIFI_DEVICE" ]; then
+  for interface in en0 en1 en2; do
+    if ifconfig "$interface" 2>/dev/null | grep -q "status: active"; then
+      WIFI_DEVICE="$interface"
+      break
     fi
-done
-
-# If networksetup failed but we have an IP, assume connected
-if [ -z "$WIFI_SSID" ]; then
-    for interface in en0 en1 en2; do
-        if ifconfig "$interface" 2>/dev/null | grep -q "inet "; then
-            WIFI_SSID="Connected"
-            break
-        fi
-    done
+  done
 fi
 
-if [ -n "$WIFI_SSID" ]; then
-    sketchybar --set $NAME \
-        icon=󰖩 \
-        icon.color=0xff66bb6a \
-        label="$WIFI_SSID" \
-        label.drawing=on
+if [ -n "$WIFI_DEVICE" ] && ifconfig "$WIFI_DEVICE" 2>/dev/null | grep -q "status: active"; then
+  ICON="󰖩"
+  LABEL="[ ${ICON} ]"
+  COLOR="$PRIMARY_COLOR"
 else
-    sketchybar --set $NAME \
-        icon=󰖪 \
-        icon.color=0xffef5350 \
-        label="Disconnected" \
-        label.drawing=on
+  ICON="󰖪"
+  LABEL="[ ${ICON} ]"
+  COLOR="$MUTED_COLOR"
 fi
+
+sketchybar --set "$NAME" label="$LABEL" label.color="$COLOR"
