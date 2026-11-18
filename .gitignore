@@ -1,0 +1,6 @@
+.DS_Store
+*.bak
+*.bak-*
+*.bak.*
+sketchybar/cache/
+sketchybar/bin/appicon
