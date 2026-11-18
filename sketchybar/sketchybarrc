@@ -1,0 +1,174 @@
+# SketchyBar: transparent floating bar on the top edge.
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+. "$CONFIG_DIR/colors.sh"
+. "$CONFIG_DIR/icons.sh"
+
+FONT="SF Pro"
+DOT=6
+DOT_CELL=18
+ICON_CELL=24
+LABEL_ICON_CELL=28
+ITEM_GAP=8
+GROUP_GAP=20
+MEDIA_GAP=6
+
+sketchybar --bar \
+  position=top \
+  display="$("$PLUGIN_DIR/bar_display.sh")" \
+  height=24 \
+  margin=10 \
+  y_offset=4 \
+  padding_left=10 \
+  padding_right=10 \
+  color=$TRANSPARENT \
+  border_width=0 \
+  shadow=off \
+  sticky=on \
+  topmost=off
+
+default=(
+  padding_left=0
+  padding_right=0
+  icon.font="$FONT:Medium:11.0"
+  label.font="$FONT:Medium:12.0"
+  icon.color=$TEXT
+  label.color=$TEXT
+  icon.padding_left=0
+  icon.padding_right=0
+  label.padding_left=0
+  label.padding_right=0
+  icon.shadow.drawing=on
+  icon.shadow.color=$SHADOW
+  icon.shadow.distance=1
+  icon.shadow.angle=270
+  label.shadow.drawing=on
+  label.shadow.color=$SHADOW
+  label.shadow.distance=1
+  label.shadow.angle=270
+  background.drawing=off
+  updates=on
+)
+sketchybar --default "${default[@]}"
+
+sketchybar --add event aerospace_workspace_change \
+           --add event aerospace_monitor_change
+
+# ============================================================
+# Left
+
+sketchybar --add item display_router left \
+  --set display_router \
+  drawing=off \
+  script="$PLUGIN_DIR/bar_display.sh" \
+  --subscribe display_router display_change system_woke
+
+sketchybar --add item workspace.driver left \
+  --set workspace.driver \
+  drawing=off \
+  update_freq=5 \
+  script="$PLUGIN_DIR/aerospace_prompt.sh" \
+  --subscribe workspace.driver aerospace_workspace_change aerospace_monitor_change
+
+# Open apps, built by the plugin before gap.media
+
+sketchybar --add item open_apps left \
+  --set open_apps \
+  drawing=off \
+  update_freq=3 \
+  script="$PLUGIN_DIR/open_apps.sh" \
+  --subscribe open_apps front_app_switched aerospace_workspace_change system_woke
+
+sketchybar --add item gap.media left \
+  --set gap.media \
+  width=$MEDIA_GAP \
+  icon.drawing=off \
+  label.drawing=off
+
+sketchybar --add item media left \
+  --set media \
+  drawing=off \
+  update_freq=2 \
+  icon.align=left \
+  icon.padding_right=6 \
+  icon.color=$ACCENT \
+  label.color=$MUTED \
+  label.max_chars=28 \
+  script="$PLUGIN_DIR/media.sh" \
+  click_script="nowplaying-cli togglePlayPause" \
+  --subscribe media media_change system_woke
+
+# ============================================================
+# Center: workspace dots
+
+for i in 1 2 3 4 5 6; do
+  sketchybar --add item workspace.$i center \
+    --set workspace.$i \
+    icon="$ICON_DOT" \
+    icon.font="$FONT:Medium:$DOT.0" \
+    icon.color=$DIM \
+    icon.width=$DOT_CELL \
+    icon.align=center \
+    label.drawing=off \
+    click_script="/opt/homebrew/bin/aerospace workspace $i"
+done
+
+# ============================================================
+# Right (added right to left)
+
+sketchybar --add item clock right \
+  --set clock \
+  update_freq=1 \
+  padding_left=$ITEM_GAP \
+  icon.drawing=off \
+  label.width=54 \
+  label.align=left \
+  script="$PLUGIN_DIR/clock.sh"
+
+sketchybar --add item date right \
+  --set date \
+  icon.drawing=off
+
+sketchybar --add item gap.right right \
+  --set gap.right \
+  width=$GROUP_GAP \
+  icon.drawing=off \
+  label.drawing=off
+
+sketchybar --add item battery right \
+  --set battery \
+  update_freq=120 \
+  icon.font="$FONT:Medium:14.0" \
+  icon.width=$((LABEL_ICON_CELL + 4)) \
+  icon.align=center \
+  script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change
+
+sketchybar --add item volume right \
+  --set volume \
+  icon.width=$ICON_CELL \
+  icon.align=center \
+  label.drawing=off \
+  script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change
+
+sketchybar --add item wifi right \
+  --set wifi \
+  update_freq=10 \
+  icon.width=$ICON_CELL \
+  icon.align=center \
+  label.drawing=off \
+  script="$PLUGIN_DIR/wifi.sh" \
+  --subscribe wifi wifi_change
+
+sketchybar --add item caffeine right \
+  --set caffeine \
+  update_freq=10 \
+  icon.width=$ICON_CELL \
+  icon.align=center \
+  label.drawing=off \
+  script="$PLUGIN_DIR/caffeine.sh" \
+  click_script="$PLUGIN_DIR/caffeine.sh toggle" \
+  --subscribe caffeine system_woke
+
+sketchybar --update

@@ -1,0 +1,21 @@
+#!/bin/sh
+# SF Symbols glyphs for the SF Pro icon font.
+
+export ICON_WIFI='􀙇'
+export ICON_WIFI_OFF='􀙈'
+export ICON_VOL_3='􀊩'
+export ICON_VOL_2='􀊧'
+export ICON_VOL_1='􀊥'
+export ICON_VOL_0='􀊣'
+export ICON_BAT_100='􀛨'
+export ICON_BAT_75='􀺸'
+export ICON_BAT_50='􀺶'
+export ICON_BAT_25='􀛩'
+export ICON_BAT_0='􀛪'
+export ICON_CUP_FILL='􀸙'
+export ICON_CUP='􀸘'
+export ICON_PLAY='􀊄'
+export ICON_PAUSE='􀊆'
+export ICON_DOT='􀟋'
+export ICON_BAT_CHARGING='􀢋'
+export ICON_APPLE=''
