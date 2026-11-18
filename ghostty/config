@@ -53,4 +53,4 @@ keybind = cmd+shift+j=resize_split:down,40
 keybind = cmd+shift+k=resize_split:up,40
 keybind = cmd+shift+l=resize_split:right,40
 # Cursor shaders (switch with: ghostty-shader)
-config-file = ?/Users/gian.gg/.config/ghostty/shaders.conf
+config-file = ?shaders.conf

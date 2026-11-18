@@ -7,10 +7,9 @@ Personal configuration files.
 | folder | goes to |
 |---|---|
 | `sketchybar/` | `~/.config/sketchybar/` |
-| `aerospace/.aerospace.toml` | `~/.aerospace.toml` |
+| `aerospace/` | `~/.config/aerospace/` |
 | `borders/` | `~/.config/borders/` |
-| `ghostty/config` | `~/Library/Application Support/com.mitchellh.ghostty/config` |
-| `ghostty/shaders*` | `~/.config/ghostty/` |
+| `ghostty/` | `~/.config/ghostty/` |
 | `fastfetch/` | `~/.config/fastfetch/` |
 | `zed/` | `~/.config/zed/` |
 | `zsh/` | `~/` (oh-my-zsh + powerlevel10k) |
