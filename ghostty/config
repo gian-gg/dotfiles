@@ -1,0 +1,56 @@
+term = xterm-256color
+
+# macOS window vibe (clean, minimal, “poster frame”)
+macos-titlebar-style = hidden
+window-decoration = true
+window-save-state = always
+
+# icon styling (hex WITHOUT '#')
+macos-icon = xray
+macos-icon-frame = plastic
+macos-icon-ghost-color = 7B7A78
+macos-icon-screen-color = 0E0F11
+
+# Font
+font-family = "Dank Mono"
+font-thicken = true
+font-size = 16
+font-feature = -calt, -liga, -dlig
+
+mouse-hide-while-typing = true
+macos-option-as-alt = true
+
+# --- Colors: foggy slate + paper highlights (hex WITHOUT '#') ---
+background = 0F1114
+background-opacity = 0.72
+background-blur-radius = 22
+
+foreground = D2D0CC
+cursor-color = D2D0CC
+
+selection-background = 2B3036
+selection-foreground = E6E3DE
+
+# Padding
+window-padding-x = 22
+window-padding-y = 22
+
+# --- Keybinds ---
+keybind = global:cmd+f20=toggle_quick_terminal
+# Create panes
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+
+# Focus panes (AeroSpace: alt+hjkl)
+keybind = cmd+h=goto_split:left
+keybind = cmd+j=goto_split:bottom
+keybind = cmd+k=goto_split:top
+keybind = cmd+l=goto_split:right
+
+# Resize panes
+keybind = cmd+shift+h=resize_split:left,40
+keybind = cmd+shift+j=resize_split:down,40
+keybind = cmd+shift+k=resize_split:up,40
+keybind = cmd+shift+l=resize_split:right,40
+# Cursor shaders (switch with: ghostty-shader)
+config-file = ?/Users/gian.gg/.config/ghostty/shaders.conf
