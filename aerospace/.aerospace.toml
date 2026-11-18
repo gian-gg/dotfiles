@@ -1,0 +1,115 @@
+# AeroSpace
+
+config-version = 2
+persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
+
+start-at-login = true
+after-startup-command = [
+  'exec-and-forget borders',
+]
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+exec-on-workspace-change = ['/bin/bash', '-c',
+  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+]
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+automatically-unhide-macos-hidden-apps = false
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 20
+inner.vertical = 20
+outer.left = 20
+outer.right = 20
+outer.top = [{ monitor.'built-in' = 42 }, 20]
+outer.bottom = 20
+
+# ======================
+# Main mode
+# ======================
+[mode.main.binding]
+
+# Focus
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move within workspace
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Monitors
+alt-tab = 'focus-monitor --wrap-around next'
+alt-shift-tab = 'move-node-to-monitor --wrap-around next'
+
+# Resize
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# Layout
+alt-space = 'layout floating tiling'
+alt-f = 'fullscreen'
+alt-slash = 'layout tiles horizontal vertical'
+
+# Workspaces: F13–F15 main monitor, F16–F18 secondary
+f13 = 'workspace 1'
+f14 = 'workspace 2'
+f15 = 'workspace 3'
+f16 = 'workspace 4'
+f17 = 'workspace 5'
+f18 = 'workspace 6'
+
+shift-f13 = 'move-node-to-workspace 1'
+shift-f14 = 'move-node-to-workspace 2'
+shift-f15 = 'move-node-to-workspace 3'
+shift-f16 = 'move-node-to-workspace 4'
+shift-f17 = 'move-node-to-workspace 5'
+shift-f18 = 'move-node-to-workspace 6'
+
+alt-r = 'mode service'
+
+# ======================
+# Service mode
+# ======================
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'secondary'
+5 = 'secondary'
+6 = 'secondary'
+
+# ======================
+# Window rules
+# ======================
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.window-title-regex-substring = '(?i)ninjabrain'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.window-title-regex-substring = '(?i)^minecraft'
+run = 'layout floating'
