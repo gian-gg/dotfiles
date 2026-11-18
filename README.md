@@ -2,6 +2,8 @@
 
 Personal configuration files.
 
+![preview](_docs/preview.png)
+
 | folder | goes to |
 |---|---|
 | `sketchybar/` | `~/.config/sketchybar/` |
